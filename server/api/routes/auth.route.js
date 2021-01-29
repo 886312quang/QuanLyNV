@@ -1,5 +1,5 @@
 const express = require("express");
-const { validate } = require("express-validation");
+const validate = require("express-validation");
 const controller = require("../controllers/auth.controller");
 
 const {
@@ -69,7 +69,7 @@ router.route("/register").post(controller.register);
  * @apiError (Bad Request 400)  ValidationError  Some parameters may contain invalid values
  * @apiError (Unauthorized 401)  Unauthorized     Incorrect email or password
  */
-router.route("/login").post(controller.login);
+router.route("/login").post(validate(login), controller.login);
 
 /**
  * @api {post} v1/auth/refresh-token Refresh Token
