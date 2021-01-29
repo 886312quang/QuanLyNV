@@ -1,25 +1,26 @@
-import FileSaver from 'file-saver';
-import XLSX from 'xlsx';
+import FileSaver from "file-saver";
+import XLSX from "xlsx";
 
 export const EXCEL_TYPE =
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 export const EXCEL_TYPE_WITH_CHARSET = `${EXCEL_TYPE};charset=UTF-8`;
-export const EXCEL_EXTENSION = '.xlsx';
+export const EXCEL_EXTENSION = ".xlsx";
 
 export class Excel {
   static exportAsExcelFile(json, header, fileName) {
     let worksheet = XLSX.utils.json_to_sheet(json, {
-        header, skipHeader: false
+      header,
+      skipHeader: false,
     });
 
     let workbook = {
       Sheets: { data: worksheet },
-      SheetNames: ['data'],
+      SheetNames: ["data"],
     };
 
     let excelBuffer = XLSX.write(workbook, {
-      bookType: 'xlsx',
-      type: 'array',
+      bookType: "xlsx",
+      type: "array",
     });
 
     this.saveAsExcelFile(excelBuffer, fileName);

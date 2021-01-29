@@ -3,7 +3,7 @@ import Layout from "../Layout/index";
 import { Redirect } from "react-router-dom";
 
 const HomePage = () => {
-  return <Redirect to="/shift" />;
+  return <Redirect to="/branch" />;
 };
 
 export default Layout(HomePage);

@@ -11,10 +11,9 @@ const Layout = (WrappedComponent) =>
     render() {
       return (
         <LayoutWrapper>
-
+          <Menu url={this.props.match.url} />
           <AntLayout>
             <Header />
-
             <Content>
               <WrappedComponent {...this.props} />
             </Content>

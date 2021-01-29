@@ -56,7 +56,7 @@ const Menu = ({ url }) => {
     >
       <Sider theme="light" trigger={null}>
         <div className="logo">
-          <h2>Saigon</h2>
+          <h2>MQ</h2>
         </div>
 
         <AntMenu theme="light" mode="inline" selectedKeys={selectedKeys}>

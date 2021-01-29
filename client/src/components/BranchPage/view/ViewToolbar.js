@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Toolbar from "../../shared/styles/Toolbar";
 import actions from "../../../_actions/branch";
 import selectors from "../../../_selectors/branch";
+import { getHistory } from "../../../configs/configureStore";
 
 const ViewToolbar = ({ match }) => {
   //Selectors
@@ -18,6 +19,11 @@ const ViewToolbar = ({ match }) => {
 
   let doDestroy = () => {
     dispatch(actions.doDestroy(id()));
+    getHistory().goBack();
+  };
+
+  const back = () => {
+    return getHistory().push("/");
   };
 
   return (
@@ -37,6 +43,7 @@ const ViewToolbar = ({ match }) => {
           Xóa
         </Button>
       </Popconfirm>
+      <Button onClick={back}>Quay lại</Button>
     </Toolbar>
   );
 };
