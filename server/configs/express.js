@@ -7,8 +7,9 @@ const cors = require("cors");
 const helmet = require("helmet");
 const passport = require("passport");
 const routes = require("../api/routes/index");
-const strategies = require("./passport");
 const error = require("../api/middlewares/error");
+
+const strategies = require("./passport");
 
 /**
  * Express instance
@@ -33,12 +34,17 @@ app.use(methodOverride());
 // secure apps by setting various HTTP headers
 app.use(helmet());
 
-// enable CORS - Cross Origin Resource Sharing
-app.use(cors());
-
 // enable authentication
 app.use(passport.initialize());
 passport.use("jwt", strategies.jwt);
+
+// enable CORS - Cross Origin Resource Sharing
+const optionsCors = {
+  origin: "*",
+  credentials: true,
+};
+
+app.use(cors(optionsCors));
 
 // Routes
 app.use("/spaapi", routes);

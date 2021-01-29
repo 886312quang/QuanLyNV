@@ -18,12 +18,12 @@ const actions = {
       dispatch({ type: SIGNIN_START });
 
       let response = await fetchSignin(username, password);
-
+      
       window.localStorage.setItem("ssauth", JSON.stringify(response.data));
       dispatch({ type: SIGNIN_SUCCESS, payload: response.data });
       getHistory().push("/");
-      
     } catch (error) {
+      console.log(error)
       Errors.handle(error);
       dispatch({
         type: SIGNIN_ERROR,
