@@ -3,7 +3,7 @@ const { ExtractJwt } = require("passport-jwt");
 const User = require("../api/models/user.model");
 
 const jwtOptions = {
-  secretOrKey: "asdasdasdasd",
+  secretOrKey: "bA2xcjpf8y5aSUFsNB2qN5yymUBSs6es3qHoFpGkec75RCeBb8cpKauGefw5qy4",
   jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("Bearer"),
 };
 

@@ -57,7 +57,7 @@ const actions = {
   doExport: (data) => (dispatch) => {
     try {
       dispatch({ type: BRANCH_EXPORT_START });
-      Excel.exportAsExcelFile(data, excelHeaderSchema, "demo");
+      Excel.exportAsExcelFile(data, excelHeaderSchema, "Branch");
       dispatch({ type: BRANCH_EXPORT_SUCCESS });
     } catch (error) {
       console.log(error);

@@ -2,12 +2,13 @@ import { Button, Form, Input } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../../../routes/CustomLoader/Spinner";
+import actions from "../../../_actions/branch";
+import selectors from "../../../_selectors/branch";
 import FormWrapper, {
   formItemLayout,
   tailFormItemLayout,
 } from "../../shared/styles/FormWrapper";
-import actions from "../../../_actions/branch";
-import selectors from "../../../_actions/branch";
+import { getHistory } from "../../../configs/configureStore";
 
 const FormComp = ({ match, form }) => {
   const dispatch = useDispatch();
@@ -24,7 +25,12 @@ const FormComp = ({ match, form }) => {
       dispatch(actions.doUpdate(record.id, values));
     } else {
       dispatch(actions.doCreate(values));
+      form.resetFields();
     }
+  };
+
+  const back = () => {
+    return getHistory().push("/");
   };
 
   useEffect(() => {
@@ -89,7 +95,7 @@ const FormComp = ({ match, form }) => {
               Reset
             </Button>
 
-            {/* <Link to="/branch">Quay lại</Link> */}
+            <Button onClick={back}>Quay lại</Button>
           </Form.Item>
         </Form>
       </FormWrapper>

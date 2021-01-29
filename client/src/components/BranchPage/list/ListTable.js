@@ -12,6 +12,7 @@ const ListTable = () => {
   // Selectors
   const selectedRowKeys = useSelector(selectors.selectSelectedRowKeys);
   const branchs = useSelector(selectors.selectBranchs);
+ 
   // Actions
   let doDestroy = (id) => {
     dispatch(actions.doDestroy(id));
@@ -26,9 +27,9 @@ const ListTable = () => {
       sorter: (a, b) => a.name.length - b.name.length,
     },
     {
-      title: "",
+      title: "Action",
       dataIndex: "",
-      width: "160px",
+      width: "200px",
       render: (_, record) => (
         <div className="table-actions">
           <Link to={`/branch/${record.id}/view`}>Xem</Link>
@@ -68,10 +69,9 @@ const ListTable = () => {
         onRow={(record) => ({
           onClick: () => handleRowClick(record),
         })}
-        // footer={()=>branchs.length + ' chi nhánh'}
-        scroll={{ x: 1000, y: 500 }}
+        footer={() => branchs.length + " chi nhánh"}
         bordered={true}
-        pagination={false}
+        pagination={{ pageSize: 4 }}
       />
     </TableWrapper>
   );

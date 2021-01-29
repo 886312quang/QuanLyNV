@@ -19,7 +19,7 @@ const layoutReducer = (state = initialState, { type, payload }) =>
         draft.menuVisible = false;
         break;
       default:
-        draft.menuVisible = false;
+        draft.menuVisible = true;
         break;
     }
   });
