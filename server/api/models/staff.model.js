@@ -4,18 +4,38 @@ const { omitBy, isNil } = require("lodash");
 const APIError = require("../utils/APIError");
 
 /**
- * Branch Schema
+ * User Roles
+ */
+const careers = ["masseur", "sauna"];
+
+/**
+ * Staff Schema
  * @private
  */
-const branchSchema = new mongoose.Schema(
+const staffSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      minlength: 3,
+      minlength: 1,
       maxlength: 128,
-      uppercase: true,
       trim: true,
       unique: true,
+      required: true,
+    },
+    runame: {
+      type: String,
+      minlength: 1,
+      maxlength: 128,
+      trim: true,
+    },
+    branch: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "Branch",
+    },
+    career: {
+      type: String,
+      enum: careers,
+      default: "masseur",
     },
     isActive: {
       type: Boolean,
@@ -30,11 +50,10 @@ const branchSchema = new mongoose.Schema(
 /**
  * Methods
  */
-branchSchema.method({
+staffSchema.method({
   transform() {
     const transformed = {};
-    const fields = ["id", "name"];
-
+    const fields = ["id", "name", "runame", "branch", "career"];
     fields.forEach((field) => {
       transformed[field] = this[field];
     });
@@ -46,26 +65,30 @@ branchSchema.method({
 /**
  * Statics
  */
-branchSchema.statics = {
+staffSchema.statics = {
+  careers,
   /**
-   * Get branch
+   * Get staff
    *
-   * @param {ObjectId} id - The objectId of branch.
-   * @returns {Promise<Branch, APIError>}
+   * @param {ObjectId} id - The objectId of staff.
+   * @returns {Promise<Staff, APIError>}
    */
   async get(id) {
     try {
-      let branch;
+      let staff;
 
       if (mongoose.Types.ObjectId.isValid(id)) {
-        branch = await this.findById(id).exec();
+        staff = await this.findById(id)
+          .populate("branch", "name")
+          .select("id name runame branch career")
+          .exec();
       }
-      if (branch) {
-        return branch;
+      if (staff) {
+        return staff;
       }
 
       throw new APIError({
-        message: "Branch does not exist",
+        message: "Staff does not exist",
         status: httpStatus.NOT_FOUND,
       });
     } catch (error) {
@@ -74,19 +97,21 @@ branchSchema.statics = {
   },
 
   /**
-   * List branchs in descending order of 'createdAt' timestamp.
+   * List staffs in descending order of 'createdAt' timestamp.
    *
-   * @param {number} skip - Number of branchs to be skipped.
-   * @param {number} limit - Limit number of branchs to be returned.
-   * @returns {Promise<Branch[]>}
+   * @param {number} skip - Number of staffs to be skipped.
+   * @param {number} limit - Limit number of staffs to be returned.
+   * @returns {Promise<Staff[]>}
    */
-  list({ page = 1, perPage = 30, name }) {
+  list({ page = 1, perPage = 30, name, runame, branch, career }) {
     name = name ? new RegExp(name, "i") : null;
-    const options = omitBy({ name }, isNil);
+    runame = runame ? new RegExp(runame, "i") : null;
+    const options = omitBy({ name, runame, branch, career }, isNil);
     options.isActive = true;
     return (
       this.find(options)
         .sort({ createdAt: -1 })
+        .populate("branch", "name")
         //   .skip(perPage * (page - 1))
         //   .limit(perPage)
         .exec()
@@ -100,15 +125,15 @@ branchSchema.statics = {
    * @param {Error} error
    * @returns {Error|APIError}
    */
-  checkDuplicateBranchname(error) {
+  checkDuplicateStaffname(error) {
     if (error.name === "MongoError" && error.code === 11000) {
       return new APIError({
-        message: "Branch already exists",
+        message: "Staff already exists",
         errors: [
           {
             field: "name",
             location: "body",
-            messages: ["'branch' already exists"],
+            messages: ["'staff' already exists"],
           },
         ],
         status: httpStatus.CONFLICT,
@@ -121,6 +146,6 @@ branchSchema.statics = {
 };
 
 /**
- * @typedef Branch
+ * @typedef Staff
  */
-module.exports = mongoose.model("Branch", branchSchema);
+module.exports = mongoose.model("Staff", staffSchema);

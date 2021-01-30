@@ -32,7 +32,14 @@ const messageUpdateSuccess = "Cập nhật nhân viên thành công.";
 const messageCreateSuccess = "Tạo nhân viên thành công.";
 const messageDeleteSuccess = "Xóa nhân viên thành công.";
 
-const excelHeaderSchema = ["id", "name", "branch"];
+const excelHeaderSchema = [
+  "ID",
+  "NAME",
+  "RUNAME",
+  "CAREER",
+  "BRANCHID",
+  "BRANCHNAME",
+];
 
 const actions = {
   doClearErrorMessage: () => {
@@ -57,7 +64,23 @@ const actions = {
   doExport: (data) => (dispatch) => {
     try {
       dispatch({ type: STAFF_EXPORT_START });
-      Excel.exportAsExcelFile(data, excelHeaderSchema, "demo");
+
+      let dataExcel = [];
+
+      data.forEach((item) => {
+        dataExcel.push({
+          ID: item.id,
+          NAME: item.name,
+          RUNAME: item.runame,
+          CAREER: item.career,
+          BRANCHID: item.branch._id,
+          BRANCHNAME: item.branch.name,
+        });
+      });
+
+      console.log(dataExcel);
+
+      Excel.exportAsExcelFile(dataExcel, excelHeaderSchema, "Staff");
       dispatch({ type: STAFF_EXPORT_SUCCESS });
     } catch (error) {
       console.log(error);
@@ -112,14 +135,15 @@ const actions = {
       dispatch({
         type: STAFF_CREATE_SUCCESS,
       });
-
       Message.success(messageCreateSuccess);
     } catch (error) {
-      Errors.handle(error);
-
       dispatch({
         type: STAFF_CREATE_ERROR,
+        payload: error,
       });
+
+      console.log(error.errors);
+      Errors.handle(error);
     }
   },
 

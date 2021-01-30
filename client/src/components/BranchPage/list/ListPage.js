@@ -20,8 +20,8 @@ const ListPage = () => {
       <Breadcrumb items={[["Trang chủ", "/"], ["Chi nhánh"]]} />
       <ContentWrapper>
         <PageTitle>Chi nhánh</PageTitle>
-        <ListTable />
         <ListToolbar />
+        <ListTable />
       </ContentWrapper>
     </React.Fragment>
   );
