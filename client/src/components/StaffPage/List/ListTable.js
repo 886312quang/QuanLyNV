@@ -94,7 +94,6 @@ const ListTable = () => {
           onClick: () => handleRowClick(record),
         })}
         footer={()=>staffs.length + ' nhân viên'}
-        scroll={{ x: 800, y: 500 }}
         bordered={true}
         pagination={{ pageSize: 4 }}
       />
