@@ -43,6 +43,40 @@ const privateRoutes = [
     permissionRequired: null,
     exact: true,
   },
+  {
+    path: "/staff",
+    exact: true,
+    loader: () => import("../components/StaffPage/List/ListPage"),
+    menu: true,
+    label: "Nhân viên",
+    permissionRequired: null,
+    icon: "team",
+  },
+  {
+    path: "/staff/new",
+    exact: true,
+    loader: () => import("../components/StaffPage/Form/FormPage"),
+    menu: false,
+    label: "Tạo mới nhân viên",
+    permissionRequired: null,
+    icon: "home",
+  },
+  {
+    path: "/staff/:id/edit",
+    menu: false,
+    loader: () => import("../components/StaffPage/Form/FormPage"),
+    label: "Tạo mới nhân viên",
+    permissionRequired: null,
+    exact: true,
+  },
+  {
+    path: "/staff/:id/view",
+    menu: false,
+    loader: () => import("../components/StaffPage/View/ViewPage"),
+    label: "Thông tin nhân viên",
+    permissionRequired: null,
+    exact: true,
+  },
 ];
 
 const authRoutes = [

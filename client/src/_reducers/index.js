@@ -3,6 +3,7 @@ import { combineReducers } from "redux";
 import signin from "./signin";
 import layout from "./layout";
 import branch from "./branch";
+import staff from "./staff";
 
 export default (history) =>
   combineReducers({
@@ -10,4 +11,5 @@ export default (history) =>
     signin,
     layout,
     branch,
+    staff,
   });
