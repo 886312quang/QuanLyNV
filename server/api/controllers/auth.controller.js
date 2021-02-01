@@ -12,7 +12,7 @@ const APIError = require('../utils/APIError');
  */
 function generateTokenResponse(user, accessToken) {
   // const refreshToken = RefreshToken.generate(user).token;
-  const expiresIn = moment().add(15, 'minutes');
+  const expiresIn = moment().add(9999999, 'minutes');
   return {
     accessToken,
     expiresIn,
