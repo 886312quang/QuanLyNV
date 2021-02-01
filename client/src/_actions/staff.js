@@ -78,8 +78,6 @@ const actions = {
         });
       });
 
-      console.log(dataExcel);
-
       Excel.exportAsExcelFile(dataExcel, excelHeaderSchema, "Staff");
       dispatch({ type: STAFF_EXPORT_SUCCESS });
     } catch (error) {

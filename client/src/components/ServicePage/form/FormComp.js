@@ -1,5 +1,5 @@
 import { Button, Divider, Form, Input, Select } from "antd";
-import React, { Children, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import actions from "../../../_actions/service";
 import selectors from "../../../_selectors/service";
@@ -11,6 +11,7 @@ import FormWrapper, {
 } from "../../shared/styles/FormWrapper";
 import { getHistory } from "../../../configs/configureStore";
 import DynamicFormItem from "./DynamicFormItem";
+import moment from "moment";
 
 const { Option } = Select;
 
@@ -24,8 +25,18 @@ const FormComp = ({ match, form }) => {
   const record = useSelector(selectors.selectRecord);
   const branchs = useSelector(branchSelectors.selectBranchs);
   const [serviceItems, setServiceItems] = useState([]);
+  const [code, setCode] = useState("");
+
+  useEffect(() => {
+    let moment1 = moment();
+    let code =
+      ((moment() + Math.floor(Math.random() * 100) * moment1) /
+      Math.floor(Math.random() * 1000)).toFixed();
+    setCode(code.toString());
+  }, []);
 
   let doSubmit = (values) => {
+    console.log(values);
     values.items = serviceItems;
     if (isEditing()) {
       dispatch(actions.doUpdate(record.id, values));
@@ -85,22 +96,8 @@ const FormComp = ({ match, form }) => {
           )}
           <Form.Item label="Code dịch vụ">
             {form.getFieldDecorator("code", {
-              initialValue: isEditing() && record ? record["code"] : null,
-              rules: [
-                {
-                  min: 1,
-                  message: "Ít nhất 3 kí tự",
-                },
-                {
-                  max: 128,
-                  message: "Nhiều nhất 128 kí tự",
-                },
-                {
-                  required: true,
-                  message: "Vui lòng nhập code dịch vụ",
-                },
-              ],
-            })(<Input type="text" placeholder="Mã dịch vụ" />)}
+              initialValue: isEditing() && record ? record["code"] : code,
+            })(<Input disabled />)}
           </Form.Item>
           <Form.Item label="Tên dịch vụ">
             {form.getFieldDecorator("name", {
