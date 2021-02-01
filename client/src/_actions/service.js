@@ -25,7 +25,7 @@ import { getHistory } from "../configs/configureStore";
 import Message from "../routes/message/message";
 import Errors from "../routes/error/errors";
 
-import services from "./service";
+import services from "../services/service";
 import { Excel } from "../components/shared/excel/excel";
 
 const messageUpdateSuccess = "Cập nhật dịch vụ thành công.";
@@ -57,7 +57,21 @@ const actions = {
   doExport: (data) => (dispatch) => {
     try {
       dispatch({ type: SERVICE_EXPORT_START });
-      Excel.exportAsExcelFile(data, excelHeaderSchema, "Service");
+      let dataExcel = [];
+      console.log(data)
+      
+      data.forEach((item) => {
+        dataExcel.push({
+          ID: item.id,
+          NAME: item.name,
+          RUNAME: item.runame,
+          CAREER: item.career,
+          BRANCHID: item.branch._id,
+          BRANCHNAME: item.branch.name,
+        });
+      });
+
+      //Excel.exportAsExcelFile(data, excelHeaderSchema, "Service");
       dispatch({ type: SERVICE_EXPORT_SUCCESS });
     } catch (error) {
       dispatch({ type: SERVICE_EXPORT_ERROR });

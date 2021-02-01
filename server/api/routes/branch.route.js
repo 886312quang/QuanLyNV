@@ -24,7 +24,7 @@ router.param("branchId", controller.load);
 router
   .route("/")
   /**
-   * @api {get} v1/branchs List Branchs
+   * @api {get} branchs List Branchs
    * @apiDescription Get a list of branchs
    * @apiVersion 1.0.0
    * @apiName ListBranchs
@@ -46,7 +46,7 @@ router
    */
   .get(/*authorize(LOGGED_USER),*/ validate(listBranchs), controller.list)
   /**
-   * @api {post} v1/branchs Create Branch
+   * @api {post} branchs Create Branch
    * @apiDescription Create a new branch
    * @apiVersion 1.0.0
    * @apiName CreateBranch
@@ -75,7 +75,7 @@ router
 router
   .route("/:branchId")
   /**
-   * @api {get} v1/branchs/:id Get Branch
+   * @api {get} branchs/:id Get Branch
    * @apiDescription Get branch information
    * @apiVersion 1.0.0
    * @apiName GetBranch
@@ -96,7 +96,7 @@ router
    */
   .get(authorize(LOGGED_USER), controller.get)
   /**
-   * @api {put} v1/branchs/:id Replace Branch
+   * @api {put} branchs/:id Replace Branch
    * @apiDescription Replace the whole branch document with a new one
    * @apiVersion 1.0.0
    * @apiName ReplaceBranch
@@ -121,7 +121,7 @@ router
    */
   //   .put(authorize(LOGGED_USER), validate(replaceBranch), controller.replace)
   /**
-   * @api {patch} v1/branchs/:id Update Branch
+   * @api {patch} branchs/:id Update Branch
    * @apiDescription Update some fields of a branch document
    * @apiVersion 1.0.0
    * @apiName UpdateBranch
@@ -149,7 +149,7 @@ router
    */
   .patch(authorize(ADMIN), validate(updateBranch), controller.update)
   /**
-   * @api {patch} v1/branchs/:id Delete Branch
+   * @api {patch} branchs/:id Delete Branch
    * @apiDescription Delete a branch
    * @apiVersion 1.0.0
    * @apiName DeleteBranch

@@ -24,7 +24,7 @@ router.param("staffId", controller.load);
 router
   .route("/")
   /**
-   * @api {get} v1/staffs List Staffs
+   * @api {get} staffs List Staffs
    * @apiDescription Get a list of staffs
    * @apiVersion 1.0.0
    * @apiName ListStaffs
@@ -46,7 +46,7 @@ router
    */
   .get(authorize(LOGGED_USER), validate(listStaffs), controller.list)
   /**
-   * @api {post} v1/staffs Create Staff
+   * @api {post} staffs Create Staff
    * @apiDescription Create a new staff
    * @apiVersion 1.0.0
    * @apiName CreateStaff
@@ -75,7 +75,7 @@ router
 router
   .route("/:staffId")
   /**
-   * @api {get} v1/staffs/:id Get Staff
+   * @api {get} staffs/:id Get Staff
    * @apiDescription Get staff information
    * @apiVersion 1.0.0
    * @apiName GetStaff
@@ -96,7 +96,7 @@ router
    */
   .get(authorize(LOGGED_USER), controller.get)
   /**
-   * @api {put} v1/staffs/:id Replace Staff
+   * @api {put} staffs/:id Replace Staff
    * @apiDescription Replace the whole staff document with a new one
    * @apiVersion 1.0.0
    * @apiName ReplaceStaff
@@ -121,7 +121,7 @@ router
    */
   //   .put(authorize(LOGGED_USER), validate(replaceStaff), controller.replace)
   /**
-   * @api {patch} v1/staffs/:id Update Staff
+   * @api {patch} staffs/:id Update Staff
    * @apiDescription Update some fields of a staff document
    * @apiVersion 1.0.0
    * @apiName UpdateStaff
@@ -149,7 +149,7 @@ router
    */
   .patch(authorize(ADMIN), validate(updateStaff), controller.update)
   /**
-   * @api {patch} v1/staffs/:id Delete Staff
+   * @api {patch} staffs/:id Delete Staff
    * @apiDescription Delete a staff
    * @apiVersion 1.0.0
    * @apiName DeleteStaff
