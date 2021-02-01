@@ -77,6 +77,40 @@ const privateRoutes = [
     permissionRequired: null,
     exact: true,
   },
+  {
+    path: "/service",
+    exact: true,
+    loader: () => import("../components/ServicePage/list/ListPage"),
+    menu: true,
+    label: "Dịch vụ",
+    permissionRequired: null,
+    icon: "appstore",
+  },
+  {
+    path: "/service/new",
+    exact: true,
+    loader: () => import("../components/ServicePage/form/FormPage"),
+    menu: false,
+    label: "Tạo mới dịch vụ",
+    permissionRequired: null,
+    icon: "home",
+  },
+  {
+    path: "/service/:id/edit",
+    loader: () => import("../components/ServicePage/form/FormPage"),
+    menu: false,
+    label: "Tạo mới dịch vụ",
+    permissionRequired: null,
+    exact: true,
+  },
+  {
+    path: "/service/:id/view",
+    loader: () => import("../components/ServicePage/view/ViewPage"),
+    menu: false,
+    label: "Thông tin dịch vụ",
+    permissionRequired: null,
+    exact: true,
+  },
 ];
 
 const authRoutes = [

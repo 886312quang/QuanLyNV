@@ -1,37 +1,41 @@
-import { Button, Form, Input, Radio, Select } from "antd";
-import React, { useEffect } from "react";
+import { Button, Divider, Form, Input, Select } from "antd";
+import React, { Children, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import branchActions from "../../../_actions/branch";
-import actions from "../../../_actions/staff";
+import actions from "../../../_actions/service";
+import selectors from "../../../_selectors/service";
 import branchSelectors from "../../../_selectors/branch";
-import selectors from "../../../_selectors/staff";
 import Spinner from "../../../routes/CustomLoader/Spinner";
 import FormWrapper, {
   formItemLayout,
   tailFormItemLayout,
 } from "../../shared/styles/FormWrapper";
 import { getHistory } from "../../../configs/configureStore";
+import DynamicFormItem from "./DynamicFormItem";
 
 const { Option } = Select;
 
 const FormComp = ({ match, form }) => {
+  let isEditing = () => {
+    return !!match.params.id;
+  };
   const dispatch = useDispatch();
-  // Selector
   const saveLoading = useSelector(selectors.selectSaveLoading);
   const dataLoading = useSelector(selectors.selectDataLoading);
   const record = useSelector(selectors.selectRecord);
   const branchs = useSelector(branchSelectors.selectBranchs);
-
-  let isEditing = () => {
-    return !!match.params.id;
-  };
+  const [serviceItems, setServiceItems] = useState([]);
 
   let doSubmit = (values) => {
+    values.items = serviceItems;
     if (isEditing()) {
       dispatch(actions.doUpdate(record.id, values));
     } else {
       dispatch(actions.doCreate(values));
     }
+  };
+
+  const onServiceItemsChange = (values) => {
+    setServiceItems(values);
   };
 
   const back = () => {
@@ -54,13 +58,6 @@ const FormComp = ({ match, form }) => {
     console.log("search:", val);
   }
 
-  useEffect(() => {
-    dispatch(branchActions.list());
-    if (isEditing()) {
-      dispatch(actions.doFind(match.params.id));
-    }
-  }, []);
-
   let renderForm = () => {
     return (
       <FormWrapper>
@@ -77,10 +74,35 @@ const FormComp = ({ match, form }) => {
         >
           {isEditing() && record && (
             <Form.Item label="ID">
-              <span style={{ fontWeight: "bold" }}>{record["id"]}</span>
+              <span
+                style={{
+                  fontWeight: "bold",
+                }}
+              >
+                {record["id"]}
+              </span>
             </Form.Item>
           )}
-          <Form.Item label="Tên nhân viên">
+          <Form.Item label="Code dịch vụ">
+            {form.getFieldDecorator("code", {
+              initialValue: isEditing() && record ? record["code"] : null,
+              rules: [
+                {
+                  min: 1,
+                  message: "Ít nhất 3 kí tự",
+                },
+                {
+                  max: 128,
+                  message: "Nhiều nhất 128 kí tự",
+                },
+                {
+                  required: true,
+                  message: "Vui lòng nhập code dịch vụ",
+                },
+              ],
+            })(<Input type="text" placeholder="Mã dịch vụ" />)}
+          </Form.Item>
+          <Form.Item label="Tên dịch vụ">
             {form.getFieldDecorator("name", {
               initialValue: isEditing() && record ? record["name"] : null,
               rules: [
@@ -94,29 +116,10 @@ const FormComp = ({ match, form }) => {
                 },
                 {
                   required: true,
-                  message: "Vui lòng nhập tên nhân viên",
+                  message: "Vui lòng nhập tên dịch vụ",
                 },
               ],
-            })(<Input type="text" placeholder="Tên nhân viên" />)}
-          </Form.Item>
-          <Form.Item label="Tên nhân viên (tiếng nga)">
-            {form.getFieldDecorator("runame", {
-              initialValue: isEditing() && record ? record["runame"] : null,
-              rules: [
-                {
-                  min: 3,
-                  message: "Ít nhất 3 kí tự",
-                },
-                {
-                  max: 128,
-                  message: "Nhiều nhất 128 kí tự",
-                },
-                {
-                  required: true,
-                  message: "Vui lòng nhập tên nhân viên (tiếng nga)",
-                },
-              ],
-            })(<Input type="text" placeholder="Tên nhân viên (tiếng nga)" />)}
+            })(<Input type="text" placeholder="Tên dịch vụ" />)}
           </Form.Item>
           <Form.Item label="Chi nhánh" hasFeedback>
             {form.getFieldDecorator("branch", {
@@ -131,11 +134,11 @@ const FormComp = ({ match, form }) => {
               <Select
                 showSearch
                 placeholder="Chọn chi nhánh"
-                optionFilterProp="children"
                 onChange={onChange}
                 onFocus={onFocus}
                 onBlur={onBlur}
                 onSearch={onSearch}
+                optionFilterProp="children"
               >
                 {branchs.map((branch, key) => (
                   <Option key={branch.id} value={branch.id}>
@@ -145,17 +148,16 @@ const FormComp = ({ match, form }) => {
               </Select>,
             )}
           </Form.Item>
-          <Form.Item {...tailFormItemLayout}>
-            {form.getFieldDecorator("career", {
-              initialValue:
-                isEditing() && record ? record["career"] : "masseur",
-            })(
-              <Radio.Group>
-                <Radio value="masseur">Mát xa viên</Radio>
-                <Radio value="sauna">Nhân viên phòng xông</Radio>
-              </Radio.Group>,
-            )}
-          </Form.Item>
+          <Divider>Dịch vụ</Divider>
+
+          <DynamicFormItem
+            match={match}
+            onChange={onServiceItemsChange}
+            initialValue={isEditing() ? record.items : null}
+          />
+
+          <Divider />
+
           <Form.Item className="form-buttons" {...tailFormItemLayout}>
             <Button
               loading={saveLoading}
@@ -173,7 +175,6 @@ const FormComp = ({ match, form }) => {
             >
               Reset
             </Button>
-
             <Button onClick={back}>Quay lại</Button>
           </Form.Item>
         </Form>

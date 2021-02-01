@@ -4,6 +4,7 @@ import signin from "./signin";
 import layout from "./layout";
 import branch from "./branch";
 import staff from "./staff";
+import service from "./service";
 
 export default (history) =>
   combineReducers({
@@ -12,4 +13,5 @@ export default (history) =>
     layout,
     branch,
     staff,
+    service,
   });

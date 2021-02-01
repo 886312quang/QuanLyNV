@@ -20,7 +20,7 @@ const ViewToolbar = ({ match }) => {
   };
 
   const back = () => {
-    return getHistory().push("/");
+    return getHistory().goBack();
   };
 
   return (

@@ -30,7 +30,7 @@ const FormComp = ({ match, form }) => {
   };
 
   const back = () => {
-    return getHistory().push("/");
+    return getHistory().goBack();
   };
 
   useEffect(() => {
