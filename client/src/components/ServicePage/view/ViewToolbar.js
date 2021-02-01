@@ -1,16 +1,14 @@
 import { Button, Popconfirm } from "antd";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Toolbar from "../../shared/styles/Toolbar";
-import actions from "../../../_actions/branch";
-import selectors from "../../../_selectors/branch";
+import selectors from "../../../_selectors/service";
+import actions from "../../../_actions/service";
+import { useSelector, useDispatch } from "react-redux";
 import { getHistory } from "../../../configs/configureStore";
 
 const ViewToolbar = ({ match }) => {
-  //Selectors
   const destroyLoading = useSelector(selectors.selectDestroyLoading);
-
   const dispatch = useDispatch();
 
   let id = () => {
@@ -19,7 +17,6 @@ const ViewToolbar = ({ match }) => {
 
   let doDestroy = () => {
     dispatch(actions.doDestroy(id()));
-    getHistory().goBack();
   };
 
   const back = () => {
@@ -28,7 +25,7 @@ const ViewToolbar = ({ match }) => {
 
   return (
     <Toolbar>
-      <Link to={`/branch/${id()}/edit`}>
+      <Link to={`/service/${id()}/edit`}>
         <Button type="primary" icon="edit">
           Chỉnh sửa
         </Button>
