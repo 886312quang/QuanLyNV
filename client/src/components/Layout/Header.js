@@ -1,19 +1,24 @@
-import { Icon, Layout, Menu, Dropdown, Avatar, Button, Badge } from "antd";
+import { Avatar, Badge, Button, Dropdown, Icon, Layout, Menu } from "antd";
 import React from "react";
-import HeaderWrapper from "./styles/HeaderWrapper";
-import selectors from "../../_selectors/layout";
-import actions from "../../_actions/layout";
 import { useDispatch, useSelector } from "react-redux";
-
+import noteActions from "../../_actions/note";
+import noteSelectors from "../../_selectors/note";
+import actions from "../../_actions/layout";
+import selectors from "../../_selectors/layout";
+import HeaderWrapper from "./styles/HeaderWrapper";
 const { Header: AntHeader } = Layout;
 
 const Header = () => {
   const ssauth = JSON.parse(window.localStorage.getItem("ssauth"));
-
+  
   const dispatch = useDispatch();
+  const noteUnReadCount = useSelector(noteSelectors.selectUnReadCount);
+  let doSignout = () => {
+    actions.doSignout();
+  };
 
-  let doSignOut = () => {
-    actions.doSignOut();
+  let doNavigateToProfile = () => {
+    // getHistory().push('/profile');
   };
 
   let doToggleMenu = () => {
@@ -22,12 +27,12 @@ const Header = () => {
 
   let userMenu = (
     <Menu selectedKeys={[]}>
-      <Menu.Item key="userCenter">
+      <Menu.Item onClick={doNavigateToProfile} key="userCenter">
         <Icon type="user" />
         Thông tin cá nhân
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item onClick={doSignOut} key="logout">
+      <Menu.Item onClick={doSignout} key="logout">
         <Icon type="logout" />
         Thoát
       </Menu.Item>
@@ -47,6 +52,13 @@ const Header = () => {
           onClick={doToggleMenu}
         />
         <div>
+          <Badge count={noteUnReadCount}>
+            <Button
+              icon="edit"
+              style={{ border: "0px" }}
+              onClick={() => dispatch(noteActions.doToggle())}
+            />
+          </Badge>
           <Dropdown className="user-dropdown" overlay={userMenu} ssauth>
             <span>
               <Avatar
