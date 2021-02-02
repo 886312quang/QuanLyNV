@@ -33,7 +33,7 @@ const actions = {
     }
   },
 
-  readmore: ({ limit = 20, skip = 0 }) => async (dispatch) => {
+  readmore: ({ limit = 6, skip = 0 }) => async (dispatch) => {
     try {
       dispatch({ type: NOTE_READMORE_START });
 
