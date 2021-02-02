@@ -111,6 +111,32 @@ const privateRoutes = [
     permissionRequired: null,
     exact: true,
   },
+  {
+    path: "/shift",
+    exact: true,
+    loader: () => import("../components/ShiffPage/list/ListPage"),
+    menu: true,
+    label: "Ca",
+    permissionRequired: null,
+    icon: "deployment-unit",
+  },
+  {
+    path: "/shift/new",
+    exact: true,
+    loader: () => import("../components/ShiffPage/form/FormPage"),
+    menu: false,
+    label: "Tạo mới Ca",
+    permissionRequired: null,
+    icon: "home",
+  },
+  {
+    path: "/shift/:id/edit",
+    loader: () => import("../components/ShiffPage/form/FormPage"),
+    menu: false,
+    label: "Tạo mới Ca",
+    permissionRequired: null,
+    exact: true,
+  },
 ];
 
 const authRoutes = [
