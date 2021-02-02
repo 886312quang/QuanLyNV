@@ -65,16 +65,16 @@ const actions = {
     try {
       dispatch({ type: SHIFT_EXPORT_START });
       let tempDate = [];
+      console.log(data)
       data.forEach((item) => {
         let tempItem = {
           ["Ngày"]: moment(item.date).format("YYYY-MM-DD"),
           ["Chi nhánh"]: item.branch.name,
           ["Tiền mặt"]: item.cash,
           ["Certificate"]: item.certificate,
-          ["-Tiền mặt-"]: 0,
-          ["-Certificate-"]: 0,
-          ["Tiền mặt (admin)"]: 0,
-          ["Certificate (admin)"]: 0,
+          ["Tiền mặt (admin)"]: item.adminCash,
+          ["Certificate (admin)"]: item.adminCertificate,
+          ["Lock"]: item.lock,
         };
         tempDate.push(tempItem);
       });

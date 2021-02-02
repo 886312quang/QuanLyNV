@@ -7,8 +7,9 @@ import actions from "../../../_actions/shift";
 import branchSelectors from "../../../_selectors/branch";
 import selectors from "../../../_selectors/shift";
 import FilterWrapper, {
-    formItemLayout
+  formItemLayout,
 } from "../../shared/styles/FilterWrapper";
+import { tailFormItemLayout } from "../../shared/styles/FormWrapper";
 const { Option } = Select;
 const { MonthPicker } = DatePicker;
 
@@ -16,6 +17,7 @@ const ListFilter = ({ form }) => {
   const dispatch = useDispatch();
   const branchs = useSelector(branchSelectors.selectBranchs);
   const filter = useSelector(selectors.selectFilter);
+
   let doSubmit = (values) => {
     let start = moment(values.date).startOf("month").format("x");
     let end = moment(values.date).endOf("month").format("x");
@@ -69,6 +71,22 @@ const ListFilter = ({ form }) => {
               )}
             </Form.Item>
           </Col>
+        </Row>
+        <Row>
+          <Form.Item>
+            <Col className="filter-buttons" span={24}>
+              <Button icon="search" type="primary" htmlType="submit">
+                Tìm kiếm
+              </Button>
+              <Button
+                htmlType="reset"
+                icon="undo"
+                onClick={() => form.resetFields("")}
+              >
+                Reset
+              </Button>
+            </Col>
+          </Form.Item>
         </Row>
       </Form>
     </FilterWrapper>
