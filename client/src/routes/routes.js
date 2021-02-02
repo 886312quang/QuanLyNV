@@ -137,6 +137,14 @@ const privateRoutes = [
     permissionRequired: null,
     exact: true,
   },
+  {
+    path: "/shift/:id/view",
+    loader: () => import("../components/ShiffPage/view/ViewPage"),
+    menu: false,
+    label: "Thông tin Ca",
+    permissionRequired: null,
+    exact: true,
+  },
 ];
 
 const authRoutes = [
