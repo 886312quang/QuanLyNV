@@ -1,7 +1,7 @@
 import api from "../api/api";
 
 const services = {
-  listFn: async ({ limit = 20, skip = 0 }) => {
+  listFn: async ({ limit = 6, skip = 0 }) => {
     const response = await api.get(`/note?limit=${limit}&skip=${skip}`);
     return response;
   },

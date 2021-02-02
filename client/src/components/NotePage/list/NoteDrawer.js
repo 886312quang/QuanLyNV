@@ -5,12 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import actions from "../../../_actions/note";
 import selectors from "../../../_selectors/note";
 import ListToolbar from "./ListToolbar";
+import Spinner from "../../../routes/CustomLoader/Spinner";
 
 const NoteDrawer = () => {
   const dispatch = useDispatch();
 
   const visible = useSelector(selectors.selectVisible);
   const notes = useSelector(selectors.selectNotes);
+  const dataLoading = useSelector(selectors.selectDataLoading);
   const [drawerWidth, setDrawerWidth] = useState("576");
 
   let toggleMenuOnResize = () => {
@@ -18,7 +20,7 @@ const NoteDrawer = () => {
   };
 
   useEffect(() => {
-    dispatch(actions.list({}));
+    dispatch(actions.list({ limit: 6, skip: 0 }));
     toggleMenuOnResize();
     window.addEventListener("resize", toggleMenuOnResize);
     return () => {
@@ -69,6 +71,7 @@ const NoteDrawer = () => {
         <Button
           type="link"
           onClick={() => dispatch(actions.readmore({ skip: notes.length }))}
+          loading={dataLoading}
         >
           Xem thêm
         </Button>
