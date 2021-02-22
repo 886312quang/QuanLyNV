@@ -145,6 +145,31 @@ const privateRoutes = [
     permissionRequired: null,
     exact: true,
   },
+  {
+    path: "/ledger/:id",
+    exact: true,
+    loader: () => import("../components/LedgerPage/list/ListPage"),
+    menu: false,
+    label: "Tính tua",
+    permissionRequired: null,
+    icon: "home",
+  },
+  {
+    path: "/ledger/:id/edit",
+    loader: () => import("../components/LedgerPage/form/FormPage"),
+    menu: false,
+    label: "Chỉnh sửa tua",
+    permissionRequired: null,
+    exact: true,
+  },
+  {
+    path: "/ledger/:id/view",
+    loader: () => import("../components/LedgerPage/view/ViewPage"),
+    menu: false,
+    label: "Thông tin tua",
+    permissionRequired: null,
+    exact: true,
+  },
 ];
 
 const authRoutes = [
