@@ -6,7 +6,8 @@ import note from "./note";
 import service from "./service";
 import signin from "./signin";
 import staff from "./staff";
-import shift from "./shift"
+import shift from "./shift";
+import ledger from "./ledger";
 
 export default (history) =>
   combineReducers({
@@ -18,4 +19,5 @@ export default (history) =>
     service,
     note,
     shift,
+    ledger,
   });
