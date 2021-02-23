@@ -170,6 +170,15 @@ const privateRoutes = [
     permissionRequired: null,
     exact: true,
   },
+  {
+    path: "/report",
+    exact: true,
+    loader: () => import("../components/ReportPage/list/ListPage"),
+    menu: true,
+    label: "Báo cáo",
+    permissionRequired: null,
+    icon: "bar-chart",
+  },
 ];
 
 const authRoutes = [
