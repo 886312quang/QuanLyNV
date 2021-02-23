@@ -114,6 +114,7 @@ exports.remove = (req, res, next) => {
 
 exports.report = async (req, res, next) => {
   try {
+    console.log(req.query);
     const shifts = await Shift.list(req.query);
     const shiftIds = [];
     shifts.forEach((shift) => {

@@ -125,6 +125,7 @@ ledgerSchema.statics = {
   report({ type, shiftIds, flag }) {
     flag = flag ? (flag = { $ne: !!flag }) : null;
     const options = omitBy({ flag }, isNil);
+    console.log(options);
     if (type === "staff") {
       return this.aggregate([
         {
