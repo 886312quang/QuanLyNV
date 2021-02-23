@@ -41,14 +41,9 @@ module.exports = {
   // PATCH /users/:userId
   updateUser: {
     body: {
-      password: Joi.string().min(6).max(128),
-      username: Joi.string().min(2).max(128),
+      password: Joi.string().min(6).max(128).required(),
+      username: Joi.string().max(128).required(),
       role: Joi.string().validate(User.roles),
-    },
-    params: {
-      userId: Joi.string()
-        .regex(/^[a-fA-F0-9]{24}$/)
-        .required(),
-    },
+    }
   },
 };

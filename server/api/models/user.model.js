@@ -88,7 +88,7 @@ userSchema.method({
 
   token() {
     const payload = {
-      exp: moment().add(15, "minutes").unix(),
+      exp: moment().add(60, "minutes").unix(),
       iat: moment().unix(),
       sub: this._id,
     };

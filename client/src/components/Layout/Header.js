@@ -6,19 +6,23 @@ import noteSelectors from "../../_selectors/note";
 import actions from "../../_actions/layout";
 import selectors from "../../_selectors/layout";
 import HeaderWrapper from "./styles/HeaderWrapper";
+import { getHistory } from "../../configs/configureStore";
+
 const { Header: AntHeader } = Layout;
 
 const Header = () => {
   const ssauth = JSON.parse(window.localStorage.getItem("ssauth"));
-  
+
   const dispatch = useDispatch();
   const noteUnReadCount = useSelector(noteSelectors.selectUnReadCount);
-  let doSignout = () => {
-    actions.doSignout();
+  let doSignOut = () => {
+    window.localStorage.removeItem("ssauth");
+    getHistory().push("/signin");
   };
 
   let doNavigateToProfile = () => {
-    // getHistory().push('/profile');
+    let id = ssauth.user.id;
+    getHistory().push(`/user/${id}/view`);
   };
 
   let doToggleMenu = () => {
@@ -32,7 +36,7 @@ const Header = () => {
         Thông tin cá nhân
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item onClick={doSignout} key="logout">
+      <Menu.Item onClick={doSignOut} key="logout">
         <Icon type="logout" />
         Thoát
       </Menu.Item>

@@ -179,6 +179,40 @@ const privateRoutes = [
     permissionRequired: null,
     icon: "bar-chart",
   },
+  {
+    path: "/user",
+    exact: true,
+    loader: () => import("../components/UserPage/list/ListPage"),
+    menu: true,
+    label: "Người dùng",
+    permissionRequired: null,
+    icon: "user",
+  },
+  {
+    path: "/user/new",
+    exact: true,
+    loader: () => import("../components/UserPage/form/FormPage"),
+    menu: false,
+    label: "Tạo mới người dùng",
+    permissionRequired: null,
+    icon: "home",
+  },
+  {
+    path: "/user/:id/edit",
+    loader: () => import("../components/UserPage/form/FormPage"),
+    menu: false,
+    label: "Tạo mới người dùng",
+    permissionRequired: null,
+    exact: true,
+  },
+  {
+    path: "/user/:id/view",
+    loader: () => import("../components/UserPage/view/ViewPage"),
+    menu: false,
+    label: "Thông tin người dùng",
+    permissionRequired: null,
+    exact: true,
+  },
 ];
 
 const authRoutes = [
