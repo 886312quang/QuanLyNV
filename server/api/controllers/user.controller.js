@@ -34,6 +34,7 @@ exports.loggedIn = (req, res) => res.json(req.user.transform());
  */
 exports.create = async (req, res, next) => {
   try {
+    console.log(req.body);
     const user = new User(req.body);
     const savedUser = await user.save();
     res.status(httpStatus.CREATED);
@@ -69,7 +70,7 @@ exports.replace = async (req, res, next) => {
  */
 exports.update = async (req, res, next) => {
   const user = Object.assign(req.locals.user, req.body);
-
+  console.log(user);
   user
     .save()
     .then((savedUser) => res.json(savedUser.transform()))
