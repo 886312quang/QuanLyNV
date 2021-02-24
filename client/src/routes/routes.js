@@ -246,7 +246,17 @@ const errorRoutes = [
   },
 ];
 
-const publicRoutes = [];
+const publicRoutes = [
+  {
+    path: "/spa",
+    exact: true,
+    loader: () => import("../components/LedgerPublicPage/list/ListPage"),
+    menu: true,
+    label: "Tua",
+    permissionRequired: null,
+    icon: "sliders",
+  },
+];
 
 export default {
   privateRoutes,

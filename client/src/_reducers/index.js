@@ -10,7 +10,7 @@ import shift from "./shift";
 import ledger from "./ledger";
 import report from "./report";
 import user from "./user";
-
+import ledgerPublic from "./ledgerPublic";
 export default (history) =>
   combineReducers({
     router: connectRouter(history),
@@ -23,5 +23,6 @@ export default (history) =>
     shift,
     ledger,
     report,
-    user
+    user,
+    ledgerPublic,
   });
