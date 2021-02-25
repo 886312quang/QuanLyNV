@@ -20,6 +20,7 @@ const ListTable = () => {
   // Selector
   const selectedRowKeys = useSelector(selectors.selectSelectedRowKeys);
   const reports = useSelector(selectors.selectReports);
+  console.log(reports)
   const sumCash = useSelector(selectors.selectSumCash);
   const sumCertificate = useSelector(selectors.selectSumCertificate);
   const sumCashSelectedRow = useSelector(selectors.selectSumCashSelectedRow);
