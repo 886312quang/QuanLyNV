@@ -256,6 +256,15 @@ const publicRoutes = [
     permissionRequired: null,
     icon: "sliders",
   },
+  {
+    path: "/salary",
+    exact: true,
+    loader: () => import("../components/Salary/index"),
+    menu: true,
+    label: "Lương",
+    permissionRequired: null,
+    icon: "calculator",
+  },
 ];
 
 export default {

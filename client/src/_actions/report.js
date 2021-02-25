@@ -56,7 +56,6 @@ const actions = {
             reportData.push(item);
           }
         });
-        console.log(reportAllBranch);
 
         // tạo field branch để group by
         let reportCurrentBranch = await services.reportFn(filter);
@@ -115,7 +114,6 @@ const actions = {
         // }
       } else {
         let response = await services.reportFn(filter);
-        console.log(response.data)
         dispatch({ type: REPORT_GET_SUCCESS, payload: response.data });
       }
     } catch (error) {

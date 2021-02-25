@@ -23,7 +23,6 @@ const ListFilter = ({ form }) => {
   const dataLoading = useSelector(selectors.selectDataLoading);
   const filter = useSelector(selectors.selectFilter);
 
-
   let doSubmit = (values) => {
     let start = values.date[0];
     let end = values.date[1];
